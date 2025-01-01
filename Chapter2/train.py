@@ -1,6 +1,7 @@
 from models.Perceptron import Perceptron
 import data.iris_data as iris_data
 from models.AdalineGD import AdalineGD
+from models.AdalineSGD import AdalineSGD
 
 
 import numpy as np
@@ -117,5 +118,32 @@ def adalineGD_std_train(): # 데이터 표준화를 통한 경사 하강법 성�
     #plt.savefig('images/02_14_2.png', dpi=300)
     plt.show()
 
+def adalineSGD_train():
+    X_std = np.copy(X)
+    X_std[:, 0] = (X[:, 0] - X[:, 0].mean()) / X[:, 0].std()
+    X_std[:, 1] = (X[:, 1] - X[:, 1].mean()) / X[:, 1].std()
 
-adalineGD_std_train()
+    ada_sgd = AdalineSGD(n_iter=15, eta=0.01, random_state=1)
+    ada_sgd.fit(X_std, y)
+
+    plot_decision_regions(X_std, y, classifier=ada_sgd)
+    plt.title('Adaline - Stochastic gradient descent')
+    plt.xlabel('Sepal length [standardized]')
+    plt.ylabel('Petal length [standardized]')
+    plt.legend(loc='upper left')
+
+    plt.tight_layout()
+    #plt.savefig('figures/02_15_1.png', dpi=300)
+    plt.show()
+
+    plt.plot(range(1, len(ada_sgd.losses_) + 1), ada_sgd.losses_, marker='o')
+    plt.xlabel('Epochs')
+    plt.ylabel('Average loss')
+
+    #plt.savefig('figures/02_15_2.png', dpi=300)
+    plt.show()
+
+
+
+
+adalineSGD_train()

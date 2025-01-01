@@ -1,3 +1,4 @@
+import numpy as np
 class AdalineSGD:
     """ADAptive LInear NEuron 분류기
 
@@ -76,7 +77,7 @@ class AdalineSGD:
         """랜덤한 작은 수로 가중치를 초기화합니다"""
         self.rgen = np.random.RandomState(self.random_state)
         self.w_ = self.rgen.normal(loc=0.0, scale=0.01, size=m)
-        self.b_ = np.float_(0.)
+        self.b_ = 0.0
         self.w_initialized = True
 
     def _update_weights(self, xi, target):
