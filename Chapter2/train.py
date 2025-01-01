@@ -89,7 +89,7 @@ def adalineGD_train():
     # plt.savefig('images/02_11.png', dpi=300)
     plt.show()
 
-def adalineGD_std_train():
+def adalineGD_std_train(): # 데이터 표준화를 통한 경사 하강법 성능 향상
 
     ################# 스케일 조정으로 인한 경사 하강법 결과 향상 #################
     # 특성을 표준화합니다.
