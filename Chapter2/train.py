@@ -71,7 +71,6 @@ def perceptron_train():
     #plt.savefig('images/02_08.png', dpi=300)
     plt.show()
 
-
 def adalineGD_train():
     fig, ax = plt.subplots(nrows=1, ncols=2, figsize=(10, 4))
 
@@ -90,5 +89,33 @@ def adalineGD_train():
     # plt.savefig('images/02_11.png', dpi=300)
     plt.show()
 
+def adalineGD_std_train():
 
-adalineGD_train()
+    ################# 스케일 조정으로 인한 경사 하강법 결과 향상 #################
+    # 특성을 표준화합니다.
+    X_std = np.copy(X)
+    X_std[:, 0] = (X[:, 0] - X[:, 0].mean()) / X[:, 0].std()
+    X_std[:, 1] = (X[:, 1] - X[:, 1].mean()) / X[:, 1].std()
+
+    ada_gd = AdalineGD(n_iter=20, eta=0.5)
+    ada_gd.fit(X_std, y)
+
+    plot_decision_regions(X_std, y, classifier=ada_gd)
+    plt.title('Adaline - Gradient descent')
+    plt.xlabel('Sepal length [standardized]')
+    plt.ylabel('Petal length [standardized]')
+    plt.legend(loc='upper left')
+    plt.tight_layout()
+    #plt.savefig('images/02_14_1.png', dpi=300)
+    plt.show()
+
+    plt.plot(range(1, len(ada_gd.losses_) + 1), ada_gd.losses_, marker='o')
+    plt.xlabel('Epochs')
+    plt.ylabel('Mean squared error')
+
+    plt.tight_layout()
+    #plt.savefig('images/02_14_2.png', dpi=300)
+    plt.show()
+
+
+adalineGD_std_train()
