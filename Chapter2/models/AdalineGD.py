@@ -43,7 +43,7 @@ class AdalineGD:
         """
         rgen = np.random.RandomState(self.random_state)
         self.w_ = rgen.normal(loc=0.0, scale=0.01, size=X.shape[1])
-        self.b_ = np.float_(0.)
+        self.b_ = 0.0
         self.losses_ = []
 
         for i in range(self.n_iter):
