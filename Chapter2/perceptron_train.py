@@ -1,5 +1,5 @@
-from Perceptron import Perceptron
-import DataSet
+from models.Perceptron import Perceptron
+import Chapter2.data.iris_data as iris_data
 
 
 import numpy as np
@@ -43,7 +43,7 @@ def plot_decision_regions(X, y, classifier, resolution=0.02):
 
 ppn = Perceptron(eta=0.1, n_iter=10)
 
-df = DataSet.df
+df = iris_data.df
 
 y = df.iloc[0:100, 4].values # 꽃의 종류를 담은 배열
 y = np.where(y == 'Iris-setosa', 0, 1)  # 값이 Iris-setosa 일 때 1로 아니면 0으로 만든 배열
