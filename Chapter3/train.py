@@ -69,17 +69,41 @@ X_test_std = sc.transform(X_test)
 X_train_01_subset = X_train_std[(y_train == 0) | (y_train == 1)]
 y_train_01_subset = y_train[(y_train == 0) | (y_train == 1)]
 
-lrgd = LogisticRegressionGD(eta=0.3, n_iter=1000, random_state=1)
-lrgd.fit(X_train_01_subset,
-         y_train_01_subset)
 
-plot_decision_regions(X=X_train_01_subset,
-                      y=y_train_01_subset,
-                      classifier=lrgd)
+def LogisticRegresssion():
+    lrgd = LogisticRegressionGD(eta=0.3, n_iter=1000, random_state=1)
+    lrgd.fit(X_train_01_subset,
+            y_train_01_subset)
 
-plt.xlabel('Petal length [standardized]')
-plt.ylabel('Petal width [standardized]')
-plt.legend(loc='upper left')
+    plot_decision_regions(X=X_train_01_subset,
+                        y=y_train_01_subset,
+                        classifier=lrgd)
 
-plt.tight_layout()
-plt.show()
+    plt.xlabel('Petal length [standardized]')
+    plt.ylabel('Petal width [standardized]')
+    plt.legend(loc='upper left')
+
+    plt.tight_layout()
+    plt.show()
+
+def SKLearnLogisticRegression():
+    ## sklearn의 Logistic Regressgion을 사용한 모델 훈련
+    from sklearn.linear_model import LogisticRegression
+
+    lr = LogisticRegression(C=100.0, solver='lbfgs', multi_class='ovr')
+    # C : 규제 하이퍼파라미터의 역수로 C 값을 감소시킬 수록 규제 강도가 증가하여 Overfit을 방지할 수 있음
+    # solver : 볼록 최적화 (convex optimization) 을 위한 알고리즘 'newton-cg, lbfgs, liblinear, sag, saga' 의 알고리즘이 있음
+    lr.fit(X_train_std, y_train)
+
+    X_combined_std = np.vstack((X_train_std, X_test_std))
+    y_combined = np.hstack((y_train, y_test))
+
+    plot_decision_regions(X_combined_std, y_combined,
+                        classifier=lr, test_idx=range(105, 150))
+    plt.xlabel('Petal length [standardized]')
+    plt.ylabel('Petal width [standardized]')
+    plt.legend(loc='upper left')
+    plt.tight_layout()
+    plt.show()
+
+SKLearnLogisticRegression()
