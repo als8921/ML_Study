@@ -163,4 +163,15 @@ def DecisionTree():
     #plt.savefig('figures/03_20.png', dpi=300)
     plt.show()
     
+    from sklearn import tree
+
+    feature_names = ['Sepal length', 'Sepal width',
+                    'Petal length', 'Petal width']
+    tree.plot_tree(tree_model,
+                feature_names=feature_names,
+                filled=True)
+
+    #plt.savefig('figures/03_21_1.pdf')
+    plt.show()
+    
 DecisionTree()
