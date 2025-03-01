@@ -195,4 +195,22 @@ def RamdomForest():
     #plt.savefig('figures/03_2.png', dpi=300)
     plt.show()
 
-RamdomForest()
+def KNeighbor():
+    from sklearn.neighbors import KNeighborsClassifier
+
+    knn = KNeighborsClassifier(n_neighbors=5,
+                            p=2,
+                            metric='minkowski')
+    knn.fit(X_train_std, y_train)
+
+    plot_decision_regions(X_combined_std, y_combined,
+                        classifier=knn, test_idx=range(105, 150))
+
+    plt.xlabel('Petal length [standardized]')
+    plt.ylabel('Petal width [standardized]')
+    plt.legend(loc='upper left')
+    plt.tight_layout()
+    #plt.savefig('figures/03_24_figures.png', dpi=300)
+    plt.show()
+
+KNeighbor()
