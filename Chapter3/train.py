@@ -174,4 +174,25 @@ def DecisionTree():
     #plt.savefig('figures/03_21_1.pdf')
     plt.show()
     
-DecisionTree()
+    
+def RamdomForest():
+    from sklearn.ensemble import RandomForestClassifier
+    X_combined = np.vstack((X_train, X_test))
+    y_combined = np.hstack((y_train, y_test))
+
+    forest = RandomForestClassifier(n_estimators=25,
+                                    random_state=1,
+                                    n_jobs=2)
+    forest.fit(X_train, y_train)
+
+    plot_decision_regions(X_combined, y_combined,
+                        classifier=forest, test_idx=range(105, 150))
+
+    plt.xlabel('Petal length [cm]')
+    plt.ylabel('Petal width [cm]')
+    plt.legend(loc='upper left')
+    plt.tight_layout()
+    #plt.savefig('figures/03_2.png', dpi=300)
+    plt.show()
+
+RamdomForest()
