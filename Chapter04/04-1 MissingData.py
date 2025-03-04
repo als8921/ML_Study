@@ -35,4 +35,13 @@ def process_4_1_2():
     print(df.dropna(thresh=4))
     print(df.dropna(subset=['C']))
 
-process_4_1_2()
+def process_4_1_3():
+    # 행의 평균으로 누락된 값 대체하기
+    from sklearn.impute import SimpleImputer
+    import numpy as np
+
+    imr = SimpleImputer(missing_values=np.nan, strategy='mean')
+    imr = imr.fit(df.values)
+    imputed_data = imr.transform(df.values)
+    print(imputed_data)
+process_4_1_3()
