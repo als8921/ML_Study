@@ -1,5 +1,6 @@
 
 import pandas as pd
+import numpy as np
 
 df = pd.DataFrame([['green', 'M', 10.1, 'class2'],
                 ['red', 'L', 13.5, 'class1'],
@@ -25,4 +26,30 @@ def process_4_2_2():
     print(df)
 
 
-process_4_2_2()
+def process_4_2_3():
+    # 클래스 레이블을 문자열에서 정수로 바꾸기 위해
+    # 매핑 딕셔너리를 만듭니다
+    class_mapping = {label: idx for idx, label in enumerate(np.unique(df['classlabel']))} # np.unique : set와 같은 기능 (중복 데이터 제거)
+
+    # 클래스 레이블을 문자열에서 정수로 바꿉니다
+    df['classlabel'] = df['classlabel'].map(class_mapping)
+    print(df)
+
+    # 클래스 레이블을 거꾸로 매핑합니다
+    inv_class_mapping = {v: k for k, v in class_mapping.items()}
+    df['classlabel'] = df['classlabel'].map(inv_class_mapping)
+    print(df)
+
+    #######
+
+    from sklearn.preprocessing import LabelEncoder
+
+    # 사이킷런의 LabelEncoder을 사용한 레이블 인코딩
+    class_le = LabelEncoder()
+    y = class_le.fit_transform(df['classlabel'].values)
+    # 거꾸로 매핑
+    print(y)
+    print(class_le.inverse_transform(y))
+
+
+process_4_2_3()
